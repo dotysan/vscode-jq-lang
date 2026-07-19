@@ -1,0 +1,110 @@
+{
+  "name": "jq-language-support",
+  "displayName": "jq Language Support",
+  "description": "Modern jq syntax highlighting and validation using the installed jq executable.",
+  "version": "0.1.0",
+  "publisher": "local",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/REPLACE_ME/jq-language-support"
+  },
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters"
+  ],
+  "keywords": [
+    "jq",
+    "json",
+    "language",
+    "syntax",
+    "validation"
+  ],
+  "activationEvents": [
+    "onLanguage:jq",
+    "onCommand:jq.validateDocument"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "jq",
+        "aliases": [
+          "jq"
+        ],
+        "extensions": [
+          ".jq"
+        ],
+        "firstLine": "^#!.*\\b(?:env(?:\\s+-S)?\\s+)?jq\\b",
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "jq",
+        "scopeName": "source.jq",
+        "path": "./syntaxes/jq.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "jq.validateDocument",
+        "title": "jq: Validate Current Document"
+      }
+    ],
+    "configuration": {
+      "title": "jq",
+      "properties": {
+        "jq.executablePath": {
+          "type": "string",
+          "default": "jq",
+          "description": "Path to the jq executable used for validation."
+        },
+        "jq.validation.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Validate jq documents with the installed jq executable."
+        },
+        "jq.validation.onChange": {
+          "type": "boolean",
+          "default": true,
+          "description": "Validate after edits. Saved documents are always validated when validation is enabled."
+        },
+        "jq.validation.delay": {
+          "type": "number",
+          "default": 300,
+          "minimum": 0,
+          "maximum": 5000,
+          "description": "Debounce delay in milliseconds before validating an edited document."
+        },
+        "jq.validation.timeout": {
+          "type": "number",
+          "default": 1500,
+          "minimum": 100,
+          "maximum": 30000,
+          "description": "Maximum validation process time in milliseconds."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "clean": "node -e \"require('fs').rmSync('out',{recursive:true,force:true})\"",
+    "compile": "tsc -p .",
+    "watch": "tsc -p . --watch",
+    "test": "node scripts/test.mjs",
+    "package": "npm run clean && npm run compile && npx @vscode/vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "^1.95.0",
+    "@vscode/vsce": "^3.2.2",
+    "typescript": "^5.7.2"
+  },
+  "allowScripts": {
+    "@vscode/vsce-sign@2.0.9": true,
+    "keytar": false
+  }
+}

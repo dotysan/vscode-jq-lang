@@ -1,0 +1,9 @@
+.venv/
+Makefile
+.gitignore
+.vscode/**
+src/**
+test/**
+scripts/**
+tsconfig.json
+**/*.map
