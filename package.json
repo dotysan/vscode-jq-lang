@@ -23,10 +23,6 @@
     "syntax",
     "validation"
   ],
-  "activationEvents": [
-    "onLanguage:jq",
-    "onCommand:jq.validateDocument"
-  ],
   "main": "./out/extension.js",
   "contributes": {
     "languages": [
